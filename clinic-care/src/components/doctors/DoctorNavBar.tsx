@@ -1,7 +1,6 @@
 import * as React from "react";
 import HouseIcon from "@mui/icons-material/House";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import MedicationIcon from "@mui/icons-material/Medication";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -20,6 +19,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
 import { ClickAwayListener, Grid, Tooltip } from "@mui/material";
+import { logout } from "../../api/authApi";
 
 
 const drawerWidth = 240;
@@ -94,23 +94,21 @@ export default function DoctorNavBar() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <Grid container direction="row" justifyContent="space-between" alignItems="center">
-            <Grid direction="row" alignItems="center">
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{ mr: 2, ...(open && { display: "none" }) }}
-              >
-                <MenuIcon />
-              </IconButton>
-
-            </Grid>
-            
-          </Grid>
-        </Toolbar>
+      <Toolbar>
+    <Grid container direction="row" justifyContent="space-between" alignItems="center">
+      <Grid container direction="row" alignItems="center">
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        onClick={handleDrawerOpen}
+        edge="start"
+        sx={{ mr: 2, ...(open && { display: "none" }) }}
+      >
+        <MenuIcon />
+      </IconButton>
+    </Grid>
+  </Grid>
+</Toolbar>
       </AppBar>
 
         <Drawer
@@ -141,7 +139,7 @@ export default function DoctorNavBar() {
 
               <ListItemButton
                 onClick={() => {
-                  navigate("/doctor/home");
+                  navigate("/protected/DoctorMain");
                   handleDrawerClose();
 
                 }}
@@ -166,24 +164,10 @@ export default function DoctorNavBar() {
                 <ListItemText primary="Patient" />
               </ListItemButton>
             </Tooltip>
-            <Tooltip title="Medicine List" placement="right">
-
-              <ListItemButton
-                onClick={() => {
-                  navigate("/doctor/medicine");
-                  handleDrawerClose();
-
-                }}
-              >
-                <ListItemIcon>
-                  <MedicationIcon />
-                </ListItemIcon>
-                <ListItemText primary="Medicine" />
-              </ListItemButton>
-            </Tooltip>
+           
             <Tooltip title="Logout Doctor Account" placement="right">
 
-              <ListItemButton >
+              <ListItemButton onClick={logout} >
                 <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
